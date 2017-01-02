@@ -1,0 +1,2 @@
+export const GET_WALL_POSTS = 'GET_WALL_POSTS';
+export const CREATED_WALL_POST = 'CREATED_WALL_POST';

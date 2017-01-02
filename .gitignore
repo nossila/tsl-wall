@@ -1,0 +1,7 @@
+*.pyc
+*.sqlite
+env/
+
+# Node modules
+frontend/node_modules/
+frontend/npm-debug.log
