@@ -19,16 +19,19 @@ class WallNewPost extends React.Component {
     render() {
         const { actions } = this.props;
 
+        var className = this.props.className || '';
+
         return (
-            <form onSubmit={this.createPost}>
+            <form onSubmit={this.createPost} className={className}>
                 <fieldset>
                     <legend>Add message to wall</legend>
 
-                    <div><textarea name="body" value={this.state.body}
+                    <div className="form-group">
+                        <textarea name="body" value={this.state.body}
                                    onChange={this.onFormChange} required="required"
-                                   placeholder="what's on your mind?"  /></div>
-
-                    <button type="submit">send</button>
+                                   placeholder="what's on your mind?" className="form-control"  />
+                    </div>
+                    <button type="submit" className="btn btn-primary">send</button>
                 </fieldset>
             </form>
         );

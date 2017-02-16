@@ -29,7 +29,7 @@ export function authLoginUserFailure(error, message) {
         type: AUTH_LOGIN_USER_FAILURE,
         payload: {
             status: error,
-            statusText: message
+            loginError: message
         }
     };
 }

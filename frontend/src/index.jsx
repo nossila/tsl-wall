@@ -1,3 +1,6 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/wall.css";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory } from 'react-router';

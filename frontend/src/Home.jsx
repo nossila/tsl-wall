@@ -12,7 +12,7 @@ class Home extends React.Component {
             new_post = <WallNewPost />;
         }
         return (
-            <div className="container">
+            <div>
                 {new_post}
                 <WallList />
             </div>

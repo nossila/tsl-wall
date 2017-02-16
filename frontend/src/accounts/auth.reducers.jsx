@@ -13,7 +13,8 @@ const initialState = {
     userName: null,
     isAuthenticated: false,
     isAuthenticating: false,
-    statusText: null,
+    loginError: null,
+    loginStatus: null,
     registerFormErrors: null
 };
 
@@ -21,7 +22,8 @@ export default createReducer(initialState, {
     [AUTH_LOGIN_USER_REQUEST]: (state, payload) => {
         return Object.assign({}, state, {
             isAuthenticating: true,
-            statusText: null
+            loginStatus: null,
+            loginError: null
         });
     },
     [AUTH_LOGIN_USER_SUCCESS]: (state, payload) => {
@@ -30,7 +32,8 @@ export default createReducer(initialState, {
             isAuthenticated: true,
             token: payload.token,
             userName: payload.user.username,
-            statusText: 'You have been successfully logged in.'
+            loginStatus: 'You have been successfully logged in.',
+            loginError: null
         });
     },
     [AUTH_LOGIN_USER_FAILURE]: (state, payload) => {
@@ -39,7 +42,8 @@ export default createReducer(initialState, {
             isAuthenticated: false,
             token: null,
             userName: null,
-            statusText: `Authentication Error: ${payload.status} - ${payload.statusText}`
+            loginStatus: null,
+            loginError: `Authentication Error: ${payload.status} - ${payload.loginError}`
         });
     },
     [AUTH_LOGOUT_USER]: (state, payload) => {
@@ -47,7 +51,8 @@ export default createReducer(initialState, {
             isAuthenticated: false,
             token: null,
             userName: null,
-            statusText: 'You have been successfully logged out.'
+            loginStatus: 'You have been successfully logged out.',
+            loginError: null
         });
     },
     [AUTH_REGISTER_FORM_INVALID]: (state, payload) => {

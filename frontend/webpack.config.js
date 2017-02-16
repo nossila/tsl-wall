@@ -3,6 +3,7 @@ const merge = require('webpack-merge');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackMd5Hash = require('webpack-md5-hash');
 const pkg = require('./package.json');
 
@@ -35,6 +36,8 @@ const common = {
                 loaders: ['babel?cacheDirectory'],
                 include: PATHS.app
             },
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?minetype=application/font-woff" },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
         ]
     },
     plugins: [
@@ -44,7 +47,7 @@ const common = {
             appMountId: 'root',
             inject: false,
             mobile: true,
-        })
+        }),
     ]
 };
 
@@ -58,6 +61,14 @@ const dev = {
         port: process.env.PORT,
         stats: {colors: true},
     },
+    module: {
+      loaders: [
+        {
+          test: /\.css$/,
+          loaders: ['style', 'css'],
+        }
+      ]
+    },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
     ]
@@ -65,10 +76,25 @@ const dev = {
 
 const prod = {
     // devtool: 'cheap-module-source-map',
+    entry: {
+      vendor: Object.keys(pkg.dependencies).filter(function(v) {
+        // Exclude some unnecessary js files
+        var exclude = ['bootstrap'];
+        return exclude.indexOf(v) == -1;
+      })
+    },
     output: {
       path: PATHS.build,
       filename: '[name].[chunkhash].js',
       chunkFilename: '[name].[chunkhash].chunk.js',
+    },
+    module: {
+      loaders: [
+        {
+          test: /\.css$/,
+          loader: ExtractTextPlugin.extract('style', 'css'),
+        }
+      ]
     },
     plugins: [
         new CleanPlugin([PATHS.build]),

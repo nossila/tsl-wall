@@ -14,6 +14,7 @@ class RegisterView extends React.Component {
         actions: React.PropTypes.shape({
             authLoginUser: React.PropTypes.func.isRequired
         }).isRequired,
+        className: React.PropTypes.string,
     }
 
     onFormChange = (e) => {
@@ -43,21 +44,34 @@ class RegisterView extends React.Component {
 
             }
 
-            errors = (<ul>{errorsLi}</ul>);
+            errors = (<div className="alert alert-danger">
+                <ul role="alert">{errorsLi}</ul>
+            </div>);
         }
 
+        var className = this.props.className || 'col-md-6';
+
         return (
-            <form onSubmit={this.signup}>
-                <fieldset>
+            <form onSubmit={this.signup} className={className}>
+                <fieldset className="well">
                     <legend>Sign Up</legend>
 
                     {errors}
 
-                    <input name="username" type="text" value={this.state.username} onChange={this.onFormChange} placeholder="username" required="required" />
-                    <input name="email" type="text" value={this.state.email} onChange={this.onFormChange} placeholder="a@b.com" required="required" />
-                    <input name="password" type="password" value={this.state.password} onChange={this.onFormChange} placeholder="*****" required="required" />
-                                
-                    <button type="submit">Sign up</button>
+                    <div className="row">
+                        <div className="col-xs-6 form-group">
+                            <label className="sr-only" htmlFor="register_username">username</label>
+                            <input name="username" id="register_username" className="form-control" type="text" value={this.state.username} onChange={this.onFormChange} placeholder="username" required="required" />
+                        </div> <div className="col-xs-6 form-group">
+                            <label className="sr-only" htmlFor="register_email">email</label>
+                            <input name="email" id="register_email" className="form-control" type="text" value={this.state.email} onChange={this.onFormChange} placeholder="a@b.com" required="required" />
+                        </div> <div className="col-xs-8  col-md-9 form-group">
+                            <label className="sr-only" htmlFor="register_password">password</label>
+                            <input name="password" id="register_password" className="form-control" type="password" value={this.state.password} onChange={this.onFormChange} placeholder="*****" required="required" />
+                        </div> <div className="col-xs-4 col-md-3">
+                            <button type="submit" className="btn btn-primary btn-block">Sign up</button>
+                        </div>
+                    </div>
                 </fieldset>
             </form>
         );
